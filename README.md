@@ -1,6 +1,6 @@
-### App Template for Rails Demystified Book
+### App Template for Demystifying Rails Book
 
-This is a template to start off with for going through the Rails Demystified
+This is a template to start off with for going through the Demystifying Rails
 Book.
 
 The pry gem has been included in this application to help readers debug their
