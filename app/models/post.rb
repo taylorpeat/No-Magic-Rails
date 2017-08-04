@@ -1,16 +1,21 @@
 class Post
-  attr_reader :id, :title, :body, :author, :created_at
+  attr_reader :id, :title, :body, :author, :created_at, :errors
 
   def initialize(attributes={})
     set_attributes(attributes)
+    @errors = {}
   end
 
   def save
+    return false unless valid?
+
     if @id.nil?
       insert
     else
       update
     end
+
+    true
   end
 
   def insert
@@ -42,6 +47,15 @@ class Post
       @id
   end
 
+  def delete
+    delete_query = <<-SQL
+      DELETE FROM posts
+      WHERE id = ?
+    SQL
+
+    connection.execute(delete_query, @id)
+  end
+
   def set_attributes(attributes={})
     @id = attributes['id'] if @id.nil?
     @title = attributes['title'] || @title
@@ -53,6 +67,21 @@ class Post
   def self.find(id)
     post_hash = connection.execute("SELECT * FROM posts WHERE id = ? LIMIT 1", id).first
     Post.new(post_hash)
+  end
+
+  def self.all
+    post_hashes = connection.execute("SELECT * FROM posts")
+
+    post_hashes.map do |post_hash|
+      Post.new(post_hash)
+    end
+  end
+
+  def valid?
+    @errors['title'] = "can't be blank" if title.blank?
+    @errors['body'] = "can't be blank" if body.blank?
+    @errors['author'] = "can't be blank" if author.blank?
+    @errors.empty?
   end
 
   private

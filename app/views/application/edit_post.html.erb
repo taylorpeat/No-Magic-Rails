@@ -1,27 +1,35 @@
 <html>
   <body>
 
+    <div class="errors">
+      <% post.errors.each do |attribute, error| %>
+        <p class="error" style="color: orange">
+          <%= attribute %>: <%= error %>
+        </p>
+      <% end%>
+    </div>
+
     <form method="post" action="/update_post">
 
       <label for="title"> Title</label>
-      <input id="title" name="title" type="text" value=<%= post['title'] %>>
+      <input id="title" name="title" type="text" value=<%= post.title %>>
       <br /> <br />
 
       <label for="body"> Body</label>
-      <textarea id="body" name="body"><%= post['body'] %></textarea>
+      <textarea id="body" name="body"><%= post.body %></textarea>
       <br /> <br />
 
       <label for="author"> Author</label>
-      <input id="author" name="author" type="text" value=<%= post['author'] %> >
+      <input id="author" name="author" type="text" value=<%= post.author %> >
       <br /> <br />
-      <input id="id" name="id" type="hidden" value=<%= params['id'] %>>
+      <input id="id" name="id" type="hidden" value=<%= post.id %>>
 
       <input type="submit" value="Update Post" />
 
     </form>
 
     <br />
-    <a href="/post/:<%= post['id'] %>">Back to Post</a>
+    <a href="/show_post/<%= post.id %>">Back to Post</a>
 
   </body>
 </html>
