@@ -68,4 +68,17 @@ class ApplicationController < ActionController::Base
       render "application/show_post", locals: { post: post, comment: comment }
     end
   end
+
+  def delete_comment
+    comment = Comment.find(params['comment_id'])
+    comment.delete
+
+    redirect_to "/show_post/#{params['post_id']}"
+  end
+
+  def list_comments
+    comments = Comment.all
+
+    render 'application/list_comments', locals: { comments: comments }
+  end
 end
