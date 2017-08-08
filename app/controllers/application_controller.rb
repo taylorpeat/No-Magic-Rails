@@ -7,8 +7,9 @@ class ApplicationController < ActionController::Base
 
   def show_post
     post = Post.find(params['id'])
+    comment = Comment.new
 
-    render 'application/show_post', locals: { post: post }
+    render 'application/show_post', locals: { post: post, comment: comment }
   end
 
   def new_post
@@ -57,4 +58,14 @@ class ApplicationController < ActionController::Base
     redirect_to '/list_posts'
   end
 
+  def create_comment
+    post = Post.find(params['post_id'])
+    comment = post.build_comment('body' => params['body'], 'author' => params['author'])
+
+    if comment.save
+      redirect_to "/show_post/#{params['post_id']}"
+    else
+      render "application/show_post", locals: { post: post, comment: comment }
+    end
+  end
 end

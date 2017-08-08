@@ -64,6 +64,22 @@ class Post
     @created_at ||= attributes['created_at']
   end
 
+  def comments
+    comment_hashes = connection.execute 'SELECT * FROM comments WHERE comments.post_id = ?', id
+    comment_hashes.map do |comment_hash|
+      Comment.new(comment_hash)
+    end
+  end
+
+  def create_comment(attributes)
+    comment = build_comment(attributes)
+    comment.save
+  end
+
+  def build_comment(attributes)
+    Comment.new(attributes.merge!('post_id' => id))
+  end
+
   def self.find(id)
     post_hash = connection.execute("SELECT * FROM posts WHERE id = ? LIMIT 1", id).first
     Post.new(post_hash)
@@ -80,7 +96,7 @@ class Post
   def valid?
     @errors['title'] = "can't be blank" if title.blank?
     @errors['body'] = "can't be blank" if body.blank?
-    @errors['author'] = "can't be blank" if author.blank?
+    @errors['author'] = "can't be blank" if author.blank? 
     @errors.empty?
   end
 
