@@ -9,7 +9,7 @@
       <% end%>
     </div>
 
-    <form method="post" action="/update_post">
+    <form method="patch" action="/posts/<%= post.id %>">
 
       <label for="title"> Title</label>
       <input id="title" name="title" type="text" value=<%= post.title %>>

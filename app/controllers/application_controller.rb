@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
                     'body' => params['body'],
                     'author' => params['author'],)
     if post.save
-      redirect_to '/list_posts'
+      redirect_to '/posts'
     else
       render '/new_post', locals: { post: post }
     end
@@ -45,9 +45,9 @@ class ApplicationController < ActionController::Base
       'id' => params['id']
     })
     if post.save
-      redirect_to "/show_post/#{params['id']}"
+      redirect_to "/posts/#{params['id']}"
     else
-      render "application/edit_post", locals: { post: post }
+      render "application/posts/#{params['id']}/edit", locals: { post: post }
     end
   end
 
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     post = Post.find(params['id'])
     post.delete
 
-    redirect_to '/list_posts'
+    redirect_to '/posts'
   end
 
   def create_comment
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     comment = post.build_comment('body' => params['body'], 'author' => params['author'])
 
     if comment.save
-      redirect_to "/show_post/#{params['post_id']}"
+      redirect_to "/posts/#{params['post_id']}"
     else
       render "application/show_post", locals: { post: post, comment: comment }
     end
@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
     comment = Comment.find(params['comment_id'])
     comment.delete
 
-    redirect_to "/show_post/#{params['post_id']}"
+    redirect_to "/posts/#{params['post_id']}"
   end
 
   def list_comments
