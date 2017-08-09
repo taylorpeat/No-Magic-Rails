@@ -27,7 +27,7 @@ class BaseModel
     end
   end
 
-  def delete
+  def destroy
     query_string = "DELETE FROM #{self.class.table_name} WHERE #{self.class.table_name}.id = ?"
     connection.execute query_string, id
   end

@@ -20,9 +20,6 @@ class Comment < BaseModel
     Post.find(post_id)
   end
 
-  def update
-  end
-
   def insert
     insert_comment_query = <<-SQL
       INSERT INTO comments (body, author, post_id, created_at)
