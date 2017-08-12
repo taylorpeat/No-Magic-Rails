@@ -1,7 +1,7 @@
 <html>
   <body>
-    <a href="/posts">Back to Posts</a>
-    <a href="/posts/<%= @post.id %>/edit">Edit Post</a>
+    <%= link_to 'Back to Posts', posts_path %>
+    <%= link_to 'Edit Post', edit_post_path(@post.id) %>
 
     <div class="post">
       <h2 class="title">
@@ -30,10 +30,9 @@
           <p class="comment_body"><%= comment.body %></p>
         </p>
 
-        <form method="delete" action="/posts/<%= @post.id %>/comments/<%=
-          comment.id %>">
-          <input type="submit" value="Delete Comment" />
-        </form>
+        <%= form_tag post_comment_path(@post.id, comment.id), method: 'delete' do %>
+          <%= submit_tag 'Delete Comment' %>
+        <% end %>
         <hr />
       <% end %>
       <div class="errors">
@@ -43,18 +42,17 @@
           </p>
         <% end%>
       </div>
-      <form method="post" action="/posts/<%= @post.id %>/comments">
-
-        <label for="body">Comment</label>
-        <textarea id="body" name="body"><%= @comment.body %></textarea>
+      <%= form_tag post_comments_path(@post.id), method: 'post' do %>
+        <%= label_tag 'Comment' %>
+        <%= text_area_tag 'comment[body]', @comment.body %>
         <br /> <br />
 
-        <label for="author">Name</label>
-        <input id="author" name="author" type="text" value=<%= @comment.author %>>
+        <%= label_tag 'Name' %>
+        <%= text_field_tag 'comment[author]', @comment.author %>
         <br /> <br />
 
-        <input type="submit" value="Add Comment" />
-      </form>
+        <%= submit_tag 'Add Comment' %>
+      <% end %>
       <hr />
     </div>
 

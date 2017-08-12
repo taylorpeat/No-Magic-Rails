@@ -13,9 +13,9 @@ class Post < BaseModel
     SQL
 
     connection.execute insert_query,
-      params['title'],
-      params['body'],
-      params['author'],
+      @title,
+      @body,
+      @author,
       Date.current.to_s
   end
 

@@ -9,27 +9,27 @@
       <% end%>
     </div>
 
-    <form method="post" action="/posts">
+    <%= form_tag posts_path, method: 'post' do %>
 
-      <label for="title"> Title</label>
-      <input id="title" name="title" type="text" value=<%= @post.title %>>
+      <%= label_tag 'Title' %>
+      <%= text_field_tag 'post[title]', @post.title %>
       <br /> <br />
 
-      <label for="body"> Body</label>
-      <textarea id="body" name="body"><%= @post.body %></textarea>
+      <%= label_tag 'Body' %>
+      <%= text_field_tag 'post[body]', @post.body %>
       <br /> <br />
 
-      <label for="author"> Author</label>
-      <input id="author" name="author" type="text" value=<%= @post.author %> >
+      <%= label_tag 'Author' %>
+      <%= text_field_tag 'post[author]', @post.author %>
       <br /> <br />
-      <input id="id" name="id" type="hidden" value=<%= @post.id %>>
+      <%= hidden_field_tag 'post[id]', @post.id %>
 
-      <input type="submit" value="Create Post" />
+      <%= submit_tag 'Create Post' %>
 
-    </form>
+    <% end %>
 
     <br />
-    <a href="/posts">Back to Posts</a>
+    <%= link_to 'Back to Posts', posts_path %>
 
   </body>
 </html>

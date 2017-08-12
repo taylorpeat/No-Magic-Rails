@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   def create
-    @post = Post.find(params['post_id'])
-    @comment = @post.build_comment('body' => params['body'], 'author' => params['author'])
+    @post = Post.find(params[:post_id])
+    @comment = @post.build_comment(params[:comment])
 
     if @comment.save
       redirect_to post_path(@post.id)
@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params['comment_id'])
+    comment = Comment.find(params[:id])
     comment.destroy
 
     redirect_to post_path(comment.post_id)
