@@ -1,29 +1,23 @@
-<html>
-  <body>
+<div class="posts">
+  <% @posts.each do |post| %>
+    <div class="post">
 
-    <div class="posts">
-      <% @posts.each do |post| %>
-        <div class="post">
+      <h2 class="title">
+        <%= link_to post.title, post_path(post.id) %>
+      </h2>
 
-          <h2 class="title">
-            <%= link_to post.title, post_path(post.id) %>
-          </h2>
-
-          <small class="meta">
-            <span class="author">by <%= post.author %> -</span>
-            <em class="created_at"><%= post.created_at %></em>
-          </small>
-          <%= link_to "Edit", edit_post_path(post.id) %>
-          <%= form_tag post_path(post.id), method: 'delete' do %>
-            <%= submit_tag 'Delete Post' %>
-          <% end %>
-        </div>
-        <hr />
+      <small class="meta">
+        <span class="author">by <%= post.author %> -</span>
+        <em class="created_at"><%= post.created_at %></em>
+      </small>
+      <%= link_to "Edit", edit_post_path(post.id) %>
+      <%= form_tag post_path(post.id), method: 'delete' do %>
+        <%= submit_tag 'Delete Post' %>
       <% end %>
     </div>
+    <hr />
+  <% end %>
+</div>
 
-    <%= link_to "New Post", new_post_path %>
-    <%= link_to 'All Comments', comments_path %>
-
-  </body>
-</html>
+<%= link_to "New Post", new_post_path %>
+<%= link_to 'All Comments', comments_path %>

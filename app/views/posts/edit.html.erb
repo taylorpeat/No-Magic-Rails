@@ -1,35 +1,9 @@
-<html>
-  <body>
+<%= render "shared/errors", obj: @post %>
 
-    <div class="errors">
-      <% @post.errors.each do |attribute, error| %>
-        <p class="error" style="color: orange">
-          <%= attribute %>: <%= error %>
-        </p>
-      <% end%>
-    </div>
+<%= form_tag post_path(@post.id), method: 'patch' do %>
+  <%= render "form_fields" %>
+<% end %>
 
-    <%= form_tag post_path(@post.id), method: 'patch' do %>
+<br />
 
-      <%= label_tag 'Title' %>
-      <%= text_field_tag 'post[title]', @post.title %>
-      <br /> <br />
-
-      <%= label_tag 'Body' %>
-      <%= text_field_tag 'post[body]', @post.body %>
-      <br /> <br />
-
-      <%= label_tag 'Author' %>
-      <%= text_field_tag 'post[author]', @post.author %>
-      <br /> <br />
-
-      <%= submit_tag 'Update Post' %>
-
-    <% end %>
-
-    <br />
-
-    <%= link_to 'Back to Post', post_path(@post.id) %>
-
-  </body>
-</html>
+<%= link_to 'Back to Post', post_path(@post.id) %>
