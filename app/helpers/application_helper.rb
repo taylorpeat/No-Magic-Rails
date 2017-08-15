@@ -30,5 +30,18 @@ module ApplicationHelper
     my_hidden_field_tag('authenticity_token', form_authenticity_token)
   end
 
+  def my_form_for(records, &block)
+    @record = records.is_a?(Array) ? records.last : records
+    fields = capture(self, &block)
+    
+    unless @record.new_record?
+      fields += my_hidden_field_tag('_method', 'patch')
+    end
+
+    path  = url_for(records)
+    attrs = "method='post' action='#{path}'"
+    "<form #{attrs}> #{my_authenticity_token_field} #{fields} </form>".html_safe
+  end
+
 end
 
